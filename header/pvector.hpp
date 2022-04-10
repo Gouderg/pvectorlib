@@ -3,6 +3,8 @@
 #include <iostream>
 #include <cmath>
 
+#include "constante.hpp"
+
 class PVector {
     public:
         // Constructor.
@@ -37,8 +39,21 @@ class PVector {
         static PVector sub(PVector v, double n);                // Return the Pvector substraction between Pvector and constante.
         static PVector sub(PVector v1, PVector v2, PVector v3); // Return the Pvector substraction between three Pvector.
 
+        // Mul.
+        void mulX(double n) {this->x *= n;}                     // Multiply x by constante.
+        void mulY(double n) {this->y *= n;}                     // Multiply y by constante.
+        void mul(double n);
 
+        // Div.
+        void div(double n);
+
+        // Other.
+        double mag();                                           // Return the length of a vector (magnitude).
+        void normalize();                                       // Normalize each components of a vector.
+        void limit(double max);                                 // Limit vector.
+        void applyForce(PVector force);                         // Apply a force with the mass.
         double headings2D();                                    // Find the angle between the velocity and the position.
+
 
     private:
         double x, y, z;

@@ -18,13 +18,11 @@ class Vehicule {
 
         void update();
         void draw(sf::RenderWindow *window);
-
+        void checkBorders();
 
 
     private:
         PVector pos;
         PVector vel;
         double mass;
-        double max_force;
-        double max_speed;
 };

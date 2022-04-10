@@ -113,6 +113,67 @@ PVector PVector::sub(PVector v1, PVector v2, PVector v3) {
 }
 
 // --
+// mul : Mulitplication between constante and the current Pvector
+// --
+
+void PVector::mul(double n) {
+    this->x *= n;
+    this->y *= n;
+    this->z *= n;
+}
+
+
+// --
+// div : Division between constante and the current Pvector
+// --
+
+void PVector::div(double n) {
+    this->x /= n;
+    this->y /= n;
+    this->z /= n;
+}
+
+
+// --
+// mag : Return the length of a vector
+// --
+
+double PVector::mag() {
+    return sqrt(pow(this->x, 2) + pow(this->y, 2) + pow(this->z, 2));
+}
+
+// --
+// normalize : Normalize each components of a vector.
+// --
+
+void PVector::normalize() {
+    double magnitude = this->mag();
+    if (magnitude != 0) {
+        this->div(magnitude);
+    }
+}
+
+// --
+// limit : Limit the magnitude of a vector.
+// --
+
+void PVector::limit(double max) {
+    if (this->mag() > max) {
+        this->normalize();
+        this->mul(max);
+    }
+}
+
+// -- 
+// applyForce : Apply a force with a mass
+
+void PVector::applyForce(PVector force) {
+    force.div(MASS);
+    this->add(force);
+}
+
+
+// --
 // headings2D : Find the angle forr orientation
 // --
 
