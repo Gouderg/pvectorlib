@@ -16,12 +16,17 @@ class Vehicule {
         // Destructor.
         ~Vehicule(){};
 
-        void update();
+        // Getter.
+        PVector getPos() const {return this->pos;}
+        PVector getVel() const {return this->vel;}
+
+        void update(sf::RenderWindow *window);
         void draw(sf::RenderWindow *window);
         void checkBorders();
+        void edges();
 
 
-    private:
+    protected:
         PVector pos;
         PVector vel;
         double mass;

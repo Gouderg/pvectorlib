@@ -42,18 +42,25 @@ class PVector {
         // Mul.
         void mulX(double n) {this->x *= n;}                     // Multiply x by constante.
         void mulY(double n) {this->y *= n;}                     // Multiply y by constante.
+        void mulZ(double n) {this->z *= n;}                     // Multiply z by constante.
+
         void mul(double n);
 
         // Div.
         void div(double n);
 
         // Other.
-        double mag();                                           // Return the length of a vector (magnitude).
-        void normalize();                                       // Normalize each components of a vector.
-        void limit(double max);                                 // Limit vector.
-        void applyForce(PVector force);                         // Apply a force with the mass.
-        double headings2D();                                    // Find the angle between the velocity and the position.
-
+        double mag();                                                   // Return the length of a vector (magnitude).
+        void setMag(double max);                                        // Set the magnitude to the maximun.
+        void normalize();                                               // Normalize each components of a vector.
+        void limit(double max);                                         // Limit vector.
+        void applyForce(PVector force);                                 // Apply a force with the mass.
+        double headings2D();                                            // Find the angle between the velocity and the position.
+        static double dist(PVector v1, PVector v2);                     // Return the distance between two Pvector.
+        static PVector seek(PVector target, PVector vel, PVector pos);  // Follow a target.
+        static PVector flee(PVector target, PVector vel, PVector pos);  // Return the direction to escape the target. 
+        static PVector pursue(PVector t_vel, PVector t_pos, PVector vel, PVector pos);  // Predict next move.
+        static PVector evade(PVector t_vel, PVector t_pos, PVector vel, PVector pos);  // Predict next move.
 
     private:
         double x, y, z;

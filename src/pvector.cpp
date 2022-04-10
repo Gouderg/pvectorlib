@@ -6,6 +6,7 @@
 PVector::PVector(const double x, const double y) {
     this->x = x;
     this->y = y;
+    this->z = 0;    // Avoid surprise with magnitude.
 }
 
 
@@ -143,6 +144,15 @@ double PVector::mag() {
 }
 
 // --
+// setMag : Set the magnitude to the maximun.
+// --
+
+void PVector::setMag(double max) {
+    this->normalize();
+    this->mul(max);
+}
+
+// --
 // normalize : Normalize each components of a vector.
 // --
 
@@ -166,10 +176,19 @@ void PVector::limit(double max) {
 
 // -- 
 // applyForce : Apply a force with a mass
+// --
 
 void PVector::applyForce(PVector force) {
     force.div(MASS);
     this->add(force);
+}
+
+// --
+// dist : Return the distance between two pvector.
+// --
+
+double PVector::dist(PVector v1, PVector v2) {
+    return sqrt(pow(v1.x - v2.x, 2) + pow(v1.y - v2.y,2) + pow(v1.z - v2.z,2));
 }
 
 
@@ -179,4 +198,44 @@ void PVector::applyForce(PVector force) {
 
 double PVector::headings2D() {
     return atan2(this->y, this->x) * 180/M_PI;
+}
+
+// --
+// seek : Return the direction to go to the target.
+// --
+
+PVector PVector::seek(PVector target, PVector vel, PVector pos) {
+    PVector force = PVector::sub(target, pos);
+    force.setMag(MAX_SPEED);
+    force.sub(vel);
+    force.limit(MAX_FORCE);
+    return force;
+}
+
+// -- 
+// flee : Return the direction to escape the target.
+// --
+
+PVector PVector::flee(PVector target, PVector vel, PVector pos) {
+    PVector force = seek(target, vel, pos);
+    force.mul(-1);
+    return force;
+}
+
+// --
+// pursue : Predict next move.
+// --
+PVector PVector::pursue(PVector t_vel, PVector t_pos, PVector vel, PVector pos) {
+    t_vel.mul(10);
+    return seek(add(t_pos, t_vel), vel, pos);
+}
+
+// --
+// evade : Evade from the target.
+// --
+
+PVector PVector::evade(PVector t_vel, PVector t_pos, PVector vel, PVector pos) {
+    PVector pursuit = pursue(t_vel, t_pos, vel, pos);
+    pursuit.mul(-1);
+    return pursuit;
 }

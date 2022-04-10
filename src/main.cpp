@@ -6,7 +6,8 @@
 #include <string> 
 
 #include "../header/vehicule.hpp"
-
+#include "../header/target.hpp"
+#include "../header/pursuer.hpp"
 
 
 int main(int argc, char const *argv[]) {	
@@ -14,7 +15,11 @@ int main(int argc, char const *argv[]) {
 	srand(time(NULL));	
 
     // Initialise un vehicule
-    Vehicule v = Vehicule();
+    //Vehicule v = Vehicule();
+
+	Target t = Target();
+	Pursuer p = Pursuer();
+
 
 	// Initialisation de l'antialiasing et de la fenêtre.
 	sf::ContextSettings settings;
@@ -33,8 +38,23 @@ int main(int argc, char const *argv[]) {
 		// Clean screen.
 		window.clear(sf::Color(25,25,100,80));
 		
-        v.update();
-        v.draw(&window);
+		// 1.
+
+        // v.update(&window);
+        // v.draw(&window);
+
+		// Draw mouse.
+	    // sf::Vector2i mouse = sf::Mouse::getPosition(window);
+		// sf::CircleShape circle(20.f);
+		// circle.setPosition(mouse.x - 20, mouse.y - 20);
+		// window.draw(circle);
+
+		// 2.
+		t.update();
+		p.update(t.getVel(), t.getPos());
+
+		t.draw(&window);
+		p.draw(&window);
 
 
 		window.display();
