@@ -178,8 +178,8 @@ void PVector::limit(double max) {
 // applyForce : Apply a force with a mass
 // --
 
-void PVector::applyForce(PVector force) {
-    force.div(MASS);
+void PVector::applyForce(PVector force, double masse) {
+    force.div(masse);
     this->add(force);
 }
 
@@ -198,44 +198,4 @@ double PVector::dist(PVector v1, PVector v2) {
 
 double PVector::headings2D() {
     return atan2(this->y, this->x) * 180/M_PI;
-}
-
-// --
-// seek : Return the direction to go to the target.
-// --
-
-PVector PVector::seek(PVector target, PVector vel, PVector pos) {
-    PVector force = PVector::sub(target, pos);
-    force.setMag(MAX_SPEED);
-    force.sub(vel);
-    force.limit(MAX_FORCE);
-    return force;
-}
-
-// -- 
-// flee : Return the direction to escape the target.
-// --
-
-PVector PVector::flee(PVector target, PVector vel, PVector pos) {
-    PVector force = seek(target, vel, pos);
-    force.mul(-1);
-    return force;
-}
-
-// --
-// pursue : Predict next move.
-// --
-PVector PVector::pursue(PVector t_vel, PVector t_pos, PVector vel, PVector pos) {
-    t_vel.mul(10);
-    return seek(add(t_pos, t_vel), vel, pos);
-}
-
-// --
-// evade : Evade from the target.
-// --
-
-PVector PVector::evade(PVector t_vel, PVector t_pos, PVector vel, PVector pos) {
-    PVector pursuit = pursue(t_vel, t_pos, vel, pos);
-    pursuit.mul(-1);
-    return pursuit;
 }

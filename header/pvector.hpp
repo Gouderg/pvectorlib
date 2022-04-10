@@ -54,14 +54,10 @@ class PVector {
         void setMag(double max);                                        // Set the magnitude to the maximun.
         void normalize();                                               // Normalize each components of a vector.
         void limit(double max);                                         // Limit vector.
-        void applyForce(PVector force);                                 // Apply a force with the mass.
+        void applyForce(PVector force, double masse);                                 // Apply a force with the mass.
         double headings2D();                                            // Find the angle between the velocity and the position.
         static double dist(PVector v1, PVector v2);                     // Return the distance between two Pvector.
-        static PVector seek(PVector target, PVector vel, PVector pos);  // Follow a target.
-        static PVector flee(PVector target, PVector vel, PVector pos);  // Return the direction to escape the target. 
-        static PVector pursue(PVector t_vel, PVector t_pos, PVector vel, PVector pos);  // Predict next move.
-        static PVector evade(PVector t_vel, PVector t_pos, PVector vel, PVector pos);  // Predict next move.
-
+        
     private:
         double x, y, z;
 };

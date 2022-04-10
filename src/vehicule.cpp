@@ -12,11 +12,10 @@ void Vehicule::update(sf::RenderWindow *window) {
 
     // Apply seek.
     sf::Vector2i mouse = sf::Mouse::getPosition(*window);
-    acc.add(PVector::seek(PVector(mouse.x, mouse.y), this->vel, this->pos));
-    // acc.add(PVector::flee(PVector(mouse.x, mouse.y), this->vel, this->pos));
+    acc.add(this->seek(PVector(mouse.x, mouse.y)));
 
     this->vel.add(acc);
-    this->vel.limit(MAX_SPEED);
+    this->vel.limit(this->maxSpeed);
     this->pos.add(vel);
     checkBorders();
 
@@ -97,4 +96,45 @@ void Vehicule::draw(sf::RenderWindow *window) {
     convex.setRotation(vel.headings2D());
     convex.setFillColor(sf::Color::Yellow);
     window->draw(convex);
+}
+
+// --
+// seek : Return the direction to go to the target.
+// --
+
+PVector Vehicule::seek(PVector target) {
+    PVector force = PVector::sub(target, this->pos);
+    force.setMag(this->maxSpeed);
+    force.sub(this->vel);
+    force.limit(this->maxForce);
+    return force;
+}
+
+// -- 
+// flee : Return the direction to escape the target.
+// --
+
+PVector Vehicule::flee(PVector target) {
+    PVector force = this->seek(target);
+    force.mul(-1);
+    return force;
+}
+
+// --
+// pursue : Predict next move.
+// --
+PVector Vehicule::pursue(Vehicule target) {
+    PVector vel = target.getVel();
+    vel.mul(10);
+    return this->seek(PVector::add(target.getPos(), vel));
+}
+
+// --
+// evade : Evade from the target.
+// --
+
+PVector Vehicule::evade(Vehicule target) {
+    PVector pursuit = this->pursue(target);
+    pursuit.mul(-1);
+    return pursuit;
 }

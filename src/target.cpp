@@ -4,7 +4,7 @@ void Target::update() {
     PVector acc = PVector(2, 1);
 
     this->vel.add(acc);
-    this->vel.limit(MAX_SPEED_TARGET);
+    this->vel.limit(this->maxSpeed);
     this->pos.add(vel);
     edges();
 

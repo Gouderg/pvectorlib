@@ -15,7 +15,7 @@ int main(int argc, char const *argv[]) {
 	srand(time(NULL));	
 
     // Initialise un vehicule
-    //Vehicule v = Vehicule();
+    // Vehicule v = Vehicule();
 
 	Target t = Target();
 	Pursuer p = Pursuer();
@@ -43,7 +43,7 @@ int main(int argc, char const *argv[]) {
         // v.update(&window);
         // v.draw(&window);
 
-		// Draw mouse.
+		// // Draw mouse.
 	    // sf::Vector2i mouse = sf::Mouse::getPosition(window);
 		// sf::CircleShape circle(20.f);
 		// circle.setPosition(mouse.x - 20, mouse.y - 20);
@@ -51,7 +51,7 @@ int main(int argc, char const *argv[]) {
 
 		// 2.
 		t.update();
-		p.update(t.getVel(), t.getPos());
+		p.update(t);
 
 		t.draw(&window);
 		p.draw(&window);

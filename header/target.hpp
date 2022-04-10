@@ -12,4 +12,5 @@ class Target: public Vehicule {
     public:
         void update();
         void draw(sf::RenderWindow *window);
+    
 };
