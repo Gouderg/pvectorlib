@@ -20,7 +20,6 @@ int main(int argc, char const *argv[]) {
 	Target t = Target();
 	Pursuer p = Pursuer();
 
-
 	// Initialisation de l'antialiasing et de la fenêtre.
 	sf::ContextSettings settings;
 	settings.antialiasingLevel = 8;
@@ -41,12 +40,12 @@ int main(int argc, char const *argv[]) {
 		// 1.
 
 		// Draw mouse.
-	    sf::Vector2i mouse = sf::Mouse::getPosition(window);
-		sf::CircleShape circle(20.f);
-		circle.setPosition(mouse.x - 20, mouse.y - 20);
-		window.draw(circle);
-        v.update(&window);
-        v.draw(&window);
+	    // sf::Vector2i mouse = sf::Mouse::getPosition(window);
+		// sf::CircleShape circle(20.f);
+		// circle.setPosition(mouse.x - 20, mouse.y - 20);
+		// window.draw(circle);
+        // v.update(&window);
+        // v.draw(&window);
 
 
 		// 2.

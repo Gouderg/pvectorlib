@@ -224,3 +224,37 @@ PVector PVector::scalarProjection(PVector v1, PVector v2) {
     v2.mul(dotProduct(v1, v2));
     return v2;
 }
+
+// --
+// rotate2D : Return a rotate pvector with that |cos(theta) -sin(theta)|  
+//                                              |sin(theta)  cos(theta)|        
+// --
+
+PVector PVector::rotate2D(PVector v1, double theta) {
+    // Convert degrees to radians.
+    theta = theta * M_PI / 180.0;
+    
+    PVector v;
+
+    v.x = v1.x * cos(theta) + v1.y * sin(theta);
+    v.y = v1.x * (-sin(theta)) + v1.y * cos(theta);
+    
+    return v;
+}
+
+// --
+// angleWith : Return the angle between the current PVector and another one.
+// --
+
+double PVector::angleWith(PVector ref_pos, PVector target, double theta) {
+
+    PVector v;
+
+    // Change the referentiel.
+    v = sub(target, ref_pos);
+
+    // Rotate the Pvector.
+    v = rotate2D(v, theta);
+
+    return angleBetween(v, PVector(1, 0, 0));
+}
