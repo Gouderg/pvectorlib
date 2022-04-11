@@ -11,13 +11,15 @@ void Vehicule::update(sf::RenderWindow *window) {
 
 
     // Apply seek.
-    sf::Vector2i mouse = sf::Mouse::getPosition(*window);
-    acc.add(this->seek(PVector(mouse.x, mouse.y)));
+    // sf::Vector2i mouse = sf::Mouse::getPosition(*window);
+    // acc.add(this->arrive(PVector(mouse.x, mouse.y)));
+
+    acc.add(this->wander());
 
     this->vel.add(acc);
     this->vel.limit(this->maxSpeed);
     this->pos.add(vel);
-    checkBorders();
+    edges();
 
 }
 
@@ -102,9 +104,23 @@ void Vehicule::draw(sf::RenderWindow *window) {
 // seek : Return the direction to go to the target.
 // --
 
-PVector Vehicule::seek(PVector target) {
+PVector Vehicule::seek(PVector target, bool arrival) {
     PVector force = PVector::sub(target, this->pos);
-    force.setMag(this->maxSpeed);
+
+    double desiredSpeed = this->maxSpeed;
+
+    if (arrival) {
+        double slowRadius = this->maxSpeed * (this->maxSpeed / this->maxForce + 1) / 2;
+        // double slowRadius = 100;
+        double distance  = force.mag();
+        if (distance < slowRadius) {
+            // map(value, start1, stop1, start2, stop2)
+            // start2 + (stop2 - start2) * ((value - start1) / (stop1 - start1));
+            desiredSpeed =  this->maxSpeed * (distance / slowRadius);
+        }
+    }
+
+    force.setMag(desiredSpeed);
     force.sub(this->vel);
     force.limit(this->maxForce);
     return force;
@@ -137,4 +153,32 @@ PVector Vehicule::evade(Vehicule target) {
     PVector pursuit = this->pursue(target);
     pursuit.mul(-1);
     return pursuit;
+}
+
+// --
+// arrive : Slow on target
+// --
+
+PVector Vehicule::arrive(PVector target) {
+    return this->seek(target, true);
+}
+
+// -- 
+// wander : permet de errer.
+// --
+
+PVector Vehicule::wander() {
+    PVector wanderPoint = this->getVel();
+    wanderPoint.setMag(100);
+    wanderPoint.add(this->getPos());
+
+    int wanderRadius = 50;
+    double theta = this->wanderTheta + this->vel.headings2D();
+    wanderPoint.add(PVector(wanderRadius * cos(theta * M_PI / 180.0), wanderRadius * sin(theta * M_PI / 180.0)));
+    PVector steer = PVector::sub(wanderPoint, this->pos);
+    steer.setMag(this->maxForce);
+
+    this->wanderTheta += (rand() % 7 + (- 3.0)) / 10.0;
+
+    return steer;
 }
