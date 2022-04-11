@@ -11,10 +11,10 @@ void Vehicule::update(sf::RenderWindow *window) {
 
 
     // Apply seek.
-    // sf::Vector2i mouse = sf::Mouse::getPosition(*window);
-    // acc.add(this->arrive(PVector(mouse.x, mouse.y)));
+    sf::Vector2i mouse = sf::Mouse::getPosition(*window);
+    acc.add(this->arrive(PVector(mouse.x, mouse.y)));
 
-    acc.add(this->wander());
+    // acc.add(this->wander());
 
     this->vel.add(acc);
     this->vel.limit(this->maxSpeed);

@@ -43,7 +43,7 @@ class Vehicule {
         PVector pos;
         PVector vel;
         double mass;
-        const double maxSpeed = 3;
+        const double maxSpeed = 10;
         const double maxForce = 0.7;
         double wanderTheta = M_PI/2;
 };
