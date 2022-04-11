@@ -199,3 +199,28 @@ double PVector::dist(PVector v1, PVector v2) {
 double PVector::headings2D() {
     return atan2(this->y, this->x) * 180/M_PI;
 }
+
+// --
+// dotProduct : Return the dot product between two PVector.
+// --
+
+double PVector::dotProduct(PVector v1, PVector v2) {
+    return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
+}
+
+// --
+// angleBetween : Return the angle between two PVector.
+// --
+
+double PVector::angleBetween(PVector v1, PVector v2) {
+    return acos(dotProduct(v1, v2) / (v1.mag() * v2.mag())) * 180/M_PI;
+}
+
+// --
+// scalarProjection.
+// --
+PVector PVector::scalarProjection(PVector v1, PVector v2) {
+    v2.normalize();
+    v2.mul(dotProduct(v1, v2));
+    return v2;
+}

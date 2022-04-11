@@ -54,10 +54,13 @@ class PVector {
         void setMag(double max);                                        // Set the magnitude to the maximun.
         void normalize();                                               // Normalize each components of a vector.
         void limit(double max);                                         // Limit vector.
-        void applyForce(PVector force, double masse);                                 // Apply a force with the mass.
+        void applyForce(PVector force, double masse);                   // Apply a force with the mass.
         double headings2D();                                            // Find the angle between the velocity and the position.
         static double dist(PVector v1, PVector v2);                     // Return the distance between two Pvector.
-        
+        static double dotProduct(PVector v1, PVector v2);               // Return the dot product between two PVector.
+        static double angleBetween(PVector v1, PVector v2);             // Return the angle between two PVector.
+        static PVector scalarProjection(PVector v1, PVector v2);        // Return the scalar Projection.
+
     private:
         double x, y, z;
 };
